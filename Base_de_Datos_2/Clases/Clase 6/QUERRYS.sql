@@ -1,11 +1,10 @@
 #ej1
 select last_name,first_name,actor_id 
     from actor
-    where last_name in (
-                        select last_name
+    where last_name in (select last_name
                         from actor
                         group by last_name
-    )
+                        having count(*) > 1)
     order by last_name,first_name;
 
 
@@ -13,22 +12,34 @@ select last_name,first_name,actor_id
 select first_name, last_name 
     from actor
     where not Exists (select actor_id
-                      from film_actor
-                      ); 
+                      from film_actor); 
 
 #ej3
 select customer_id,first_name,last_name
     from customer
     where customer_id in (
-                          select customer_id from (
+                          select customer_id
+                          from(
                           select count(customer_id) as cant,customer_id
                           from rental
                           group by customer_id 
                           order by count(customer_id))
                           as countCustomers
-                          where cant = 1
-                          );
+                          where cant = 1);
 
+
+#ej4
+select customer_id,first_name,last_name
+    from customer
+    where customer_id in (
+                          select customer_id
+                          from(
+                          select count(customer_id) as cant,customer_id
+                          from rental
+                          group by customer_id 
+                          order by count(customer_id))
+                          as countCustomers
+                          where cant > 1);
 
 
 
