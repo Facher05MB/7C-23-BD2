@@ -30,6 +30,20 @@ select customer_id,first_name,last_name
                           );
 
 
+#ej4 
+select customer_id,first_name,last_name
+    from customer
+    where customer_id not in (
+                          select customer_id from (
+                          select count(customer_id) as cant,customer_id
+                          from rental
+                          group by customer_id 
+                          order by count(customer_id))
+                          as countCustomers
+                          where cant = 1
+                          );
+
+
 
 
 

@@ -35,18 +35,21 @@ SELECT customer_id,
                                 FROM payment 
                                WHERE customer.customer_id = payment.customer_id))
 	   AS max_amount 
+       (SELECT address_id form address ) 
+       AS address
   FROM customer 
  ORDER BY max_amount DESC, 
         customer_id DESC;
 
-address address
 
-SELECT DISTINCT amount 
-          FROM payment,customer
-         WHERE customer.customer_id = payment.customer_id 
-           AND amount >= ALL (SELECT amount 
-                                FROM payment 
-                               WHERE customer.customer_id = payment.customer_id)
+
+
+
+select *
+ from customer
+ JOIN payment on customer.customer_id = payment.customer_id 
+ GROUP BY first_name, last_name;
+
 
 Generate a report that shows the customer's information with the highest payment and the lowest payment in the same row'.
 #ej4 
