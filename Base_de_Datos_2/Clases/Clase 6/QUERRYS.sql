@@ -1,11 +1,10 @@
 #ej1
 select last_name,first_name,actor_id 
     from actor
-    where last_name in (
-                        select last_name
+    where last_name in (select last_name
                         from actor
                         group by last_name
-    )
+                        having count(*) > 1)
     order by last_name,first_name;
 
 
@@ -13,21 +12,20 @@ select last_name,first_name,actor_id
 select first_name, last_name 
     from actor
     where not Exists (select actor_id
-                      from film_actor
-                      ); 
+                      from film_actor); 
 
 #ej3
 select customer_id,first_name,last_name
     from customer
     where customer_id in (
-                          select customer_id from (
+                          select customer_id
+                          from(
                           select count(customer_id) as cant,customer_id
                           from rental
                           group by customer_id 
                           order by count(customer_id))
                           as countCustomers
-                          where cant = 1
-                          );
+                          where cant = 1);
 
 
 #ej4 
@@ -48,65 +46,60 @@ select customer_id,first_name,last_name
 
 
 #ej5
-SELECT a1.first_name, a1.actor_id
-    FROM actor a1
-    JOIN film_actor fa ON a1.actor_id = fa.actor_id
-    JOIN film f ON f.film_id = fa.film_id
-    WHERE f.title = 'BETRAYED REAR'
-    OR a1.actor_id IN (
-                       SELECT a2.actor_id
-                       FROM actor a2
-                       JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id
-                       JOIN film f2 ON f2.film_id = fa2.film_id
-                       WHERE f2.title = 'CATCH AMISTAD'
-                       )
-    group by actor_id; 
+select actor_id,first_name,last_name
+    from actor
+    where actor_id in ( select actor_id
+                        from film_actor
+                        where film_id in ( select film_id 
+                                           from film
+                                           where title = 'BETRAYED REAR' or title = 'CATCH AMISTAD')  
+                        group by actor_id);
 
 
 
 #ej6
-SELECT a1.first_name, a1.actor_id
-    FROM actor a1
-    JOIN film_actor fa ON a1.actor_id = fa.actor_id
-    JOIN film f ON f.film_id = fa.film_id
-    WHERE f.title = 'BETRAYED REAR'
-    OR a1.actor_id  NOT IN (
-                            SELECT a2.actor_id
-                            FROM actor a2
-                            JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id
-                            JOIN film f2 ON f2.film_id = fa2.film_id
-                            WHERE f2.title = 'CATCH AMISTAD'
-);
+select actor_id,first_name,last_name
+    from actor
+    where actor_id in ( select actor_id
+                        from film_actor
+                        where film_id in ( select film_id 
+                                           from film
+                                           where title = 'BETRAYED REAR' or title = 'CATCH AMISTAD')  
+                        group by actor_id)
+    and actor_id not in ( select actor_id
+                        from film_actor
+                        where film_id in ( select film_id 
+                                           from film
+                                           where title = 'BETRAYED REAR' or title = 'CATCH AMISTAD')  
+                        group by actor_id);
+
 
 
 #ej7
-SELECT a1.first_name, a1.actor_id
-    FROM actor a1
-    JOIN film_actor fa ON a1.actor_id = fa.actor_id
-    JOIN film f ON f.film_id = fa.film_id
-    WHERE  f.title = 'BETRAYED REAR'and
-    a1.actor_id  IN (
-                    SELECT a2.actor_id
-                    FROM actor a2
-                    JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id
-                    JOIN film f2 ON f2.film_id = fa2.film_id
-                    WHERE f2.title = 'CATCH AMISTAD'
-                    );
+select actor_id,first_name,last_name
+    from actor
+    where actor_id in ( select actor_id
+                        from film_actor
+                        where film_id in ( select film_id 
+                                           from film
+                                           where title = 'BETRAYED REAR' or title = 'CATCH AMISTAD')  
+                        group by actor_id)
+    and actor_id in ( select actor_id
+                        from film_actor
+                        where film_id in ( select film_id 
+                                           from film
+                                           where title = 'BETRAYED REAR' or title = 'CATCH AMISTAD')  
+                        group by actor_id);
 
 #ej8
-SELECT a1.first_name, a1.actor_id
-    FROM actor a1
-    JOIN film_actor fa ON a1.actor_id = fa.actor_id
-    JOIN film f ON f.film_id = fa.film_id
-    WHERE a1.actor_id NOT IN (
-                              SELECT a2.actor_id
-                              FROM actor a2
-                              JOIN film_actor fa2 ON a2.actor_id = fa2.actor_id
-                              JOIN film f2 ON f2.film_id = fa2.film_id
-                              WHERE f2.title = 'BETRAYED REAR' or f2.title = 'CATCH AMISTAD'
-                              )
-    group by actor_id;
-
+select actor_id,first_name,last_name
+    from actor
+    where actor_id not in ( select actor_id
+                        from film_actor
+                        where film_id in ( select film_id 
+                                           from film
+                                           where title = 'BETRAYED REAR' or title = 'CATCH AMISTAD')  
+                        group by actor_id);
 
 
 
