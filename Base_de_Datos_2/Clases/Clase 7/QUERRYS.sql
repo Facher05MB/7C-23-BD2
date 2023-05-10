@@ -21,38 +21,42 @@ SELECT title,rating,length
 
 
 
-Generate a report with list of customers showing the lowest payments done by each of them. 
-Show customer information, the address and the lowest amount, provide both solution using ALL and/or ANY and MIN.
-#ej3
 
-SELECT customer_id, 
-       first_name, 
-       last_name, 
-       (SELECT DISTINCT amount 
-          FROM payment 
-         WHERE customer.customer_id = payment.customer_id 
-           AND amount >= ALL (SELECT amount 
-                                FROM payment 
-                               WHERE customer.customer_id = payment.customer_id))
-	   AS max_amount 
-       (SELECT address_id form address ) 
-       AS address
-  FROM customer 
- ORDER BY max_amount DESC, 
-        customer_id DESC;
+
+#ej3 
+
+
+SELECT * from (
+  SELECT c.customer_id as id,c.first_name as nombre, c.last_name as apellido , a.address as dirrecion, p.amount AS menor_pago
+  FROM customer c
+  INNER JOIN payment p on c.customer_id = p.customer_id
+  INNER JOIN address a on c.address_id = a.address_id
+  WHERE p.amount <= ALL(
+    SELECT amount from payment WHERE customer_id=c.customer_id
+  )
+) as query_principal
+GROUP BY id,menor_pago;
 
 
 
 
-
-select *
- from customer
- JOIN payment on customer.customer_id = payment.customer_id 
- GROUP BY first_name, last_name;
-
-
-Generate a report that shows the customer's information with the highest payment and the lowest payment in the same row'.
 #ej4 
+
+SELECT id, nombre, apellido, direccion, min(precio) AS menor_pago, max(precio) AS mayor_pago from (
+  SELECT c.customer_id as id,c.first_name as nombre, c.last_name as apellido,a.address as direccion,p.amount as precio
+  FROM customer c
+  INNER JOIN payment p on c.customer_id = p.customer_id
+  INNER JOIN address a on c.address_id = a.address_id
+  WHERE p.amount <= ALL(
+    SELECT amount from payment WHERE customer_id=c.customer_id
+  )
+  OR p.amount >= ALL(
+    SELECT amount from payment WHERE customer_id=c.customer_id
+  )
+) as query_principal
+GROUP BY id;
+
+
 
 
 
