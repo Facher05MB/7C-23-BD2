@@ -1,11 +1,14 @@
 #ej1
 
 
+SELECT c.country_id as id , c.country as pais , COUNT(ci.city_id) as ciudades
+    FROM country c
+    JOIN city ci ON c.country_id = ci.country_id
+    GROUP BY c.country_id, c.country
+    having  COUNT(ci.city_id)
+    ORDER BY c.country, c.country_id;
 
-SELECT country_id, country
-    FROM country 
-    where country_id in ( select country_id
-                            from city 
-                            having COUNT(city_id)) 
-    GROUP BY country_id, country;
- 
+
+#ej2
+
+
