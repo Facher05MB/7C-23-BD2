@@ -1,7 +1,7 @@
 #ej1
 
 
-SELECT c.country_id as id , c.country as pais , COUNT(ci.city_id) as ciudades
+SELECT c.country_id as id , c.country as pais
     FROM country c
     JOIN city ci ON c.country_id = ci.country_id
     GROUP BY c.country_id, c.country
