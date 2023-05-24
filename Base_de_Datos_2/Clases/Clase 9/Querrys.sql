@@ -20,7 +20,7 @@ SELECT c.country_id as id , c.country as pais, COUNT(ci.city_id) as ciudades
     having  COUNT(ci.city_id)  > 10
     ORDER BY COUNT(ci.city_id);
 
-
+#ej3
 
 SELECT concat(c.last_name, ' ', c.first_name) as nombre, SUM(p.amount) AS Plata_Gastada, a.address as direccion, COUNT(r.rental_id) as Cantidad_de_peliculas
     FROM customer c
@@ -31,6 +31,7 @@ SELECT concat(c.last_name, ' ', c.first_name) as nombre, SUM(p.amount) AS Plata_
     ORDER BY Plata_Gastada DESC;
 
 
+#ej4
 SELECT c.name as Nombre_Categoria, AVG(f.length) as Duracion_Promedio
     FROM film f
     JOIN film_category fm on f.film_id = fm.film_id
@@ -39,6 +40,7 @@ SELECT c.name as Nombre_Categoria, AVG(f.length) as Duracion_Promedio
     ORDER BY Duracion_Promedio DESC;
 
 
+#ej5
 SELECT f.rating as Rating, count(r.rental_id) as Ventas
 FROM film f
 JOIN inventory i on f.film_id = i.film_id
