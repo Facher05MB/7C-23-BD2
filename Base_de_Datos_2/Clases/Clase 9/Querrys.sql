@@ -42,7 +42,7 @@ SELECT c.name as Nombre_Categoria, AVG(f.length) as Duracion_Promedio
 
 #ej5
 SELECT f.rating as Rating, count(r.rental_id) as Ventas
-FROM film f
-JOIN inventory i on f.film_id = i.film_id
-JOIN rental r on i.inventory_id = r.inventory_id
-GROUP BY Rating;
+    FROM film f
+    JOIN inventory i on f.film_id = i.film_id
+    JOIN rental r on i.inventory_id = r.inventory_id
+    GROUP BY Rating;
