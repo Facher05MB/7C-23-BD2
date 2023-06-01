@@ -41,3 +41,22 @@ order by  store_id, last_name;
 
 
 
+#Show sales per store (money of rented films)
+
+#show store's city, country, manager info and total sales (money)'
+#(optional) Use concat to show city and country and manager first and last name
+
+
+
+
+Select concat(co.country, " " , ci.city) as locationn, concat(sta.first_name, " ", sta.last_name) as staff, sum(p.amount)
+from store sto
+INNER JOIN address a on a.address_id = sto.address_id
+INNER JOIN city ci on ci.city_id = a.city_id
+INNER JOIN country co on co.country_id = ci.country_id
+INNER JOIN staff sta on sta.store_id = sto.store_id
+INNER JOIN payment p on p.staff_id = sta.staff_id
+group by locationn, sta.first_name, sta.last_name;
+
+
+
