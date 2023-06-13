@@ -60,3 +60,13 @@ group by locationn, sta.first_name, sta.last_name;
 
 
 
+
+
+select concat(a.first_name, ' ',a.last_name) as actor, count(f.film_id) as films
+from actor a
+inner join film_actor fa on fa.actor_id = a.actor_id
+inner join film f on f.film_id = fa.film_id
+group by actor
+order by films desc
+limit 1
+;

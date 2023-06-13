@@ -15,7 +15,7 @@ SELECT title,rating,length
   FROM film as f1
   WHERE length <= ALL (SELECT length 
                         FROM film)
-                        AND NOT EXISTS(SELECT * FROM film AS f2 WHERE f2.film_id <> f1.film_id AND f2.length <= f1.length)
+                        AND  NOT EXISTS(SELECT * FROM film AS f2 WHERE f2.film_id <> f1.film_id AND f2.length <= f1.length)
 
 ;
 
