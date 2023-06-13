@@ -41,14 +41,8 @@ order by  store_id, last_name;
 
 
 
-#Show sales per store (money of rented films)
 
-#show store's city, country, manager info and total sales (money)'
-#(optional) Use concat to show city and country and manager first and last name
-
-
-
-
+#ej4
 Select concat(co.country, " " , ci.city) as locationn, concat(sta.first_name, " ", sta.last_name) as staff, sum(p.amount)
 from store sto
 INNER JOIN address a on a.address_id = sto.address_id
@@ -61,7 +55,7 @@ group by locationn, sta.first_name, sta.last_name;
 
 
 
-
+#ej5
 select concat(a.first_name, ' ',a.last_name) as actor, count(f.film_id) as films
 from actor a
 inner join film_actor fa on fa.actor_id = a.actor_id
