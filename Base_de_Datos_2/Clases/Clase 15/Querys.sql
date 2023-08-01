@@ -22,13 +22,13 @@ CREATE OR REPLACE VIEW list_of_customers AS
 
 2#Create a view named film_details,
  it should contain the following columns: 
- film id, /
- title, /
- description, / 
- category, /
+ film id, 
+ title, 
+ description,  
+ category, 
  price, 
- length, /
- rating, /
+ length, 
+ rating, 
  actors - as a string of all the actors separated by comma. Hint use GROUP_CONCAT /
 
 
