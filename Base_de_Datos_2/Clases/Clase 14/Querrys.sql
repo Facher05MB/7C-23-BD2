@@ -69,10 +69,28 @@ select MONTH(rental_date) from rental;
 
 
 
+/*Investigate CAST and CONVERT functions. Explain the differences if any, write examples based on sakila DB*/
 
 
 
 
+/*
+Función CAST():
+    La función CAST se utiliza para convertir un valor de un tipo de datos a otro tipo de datos.
+    Es útil cuando necesitas cambiar el tipo de datos de una columna o expresión en una consulta. 
+    Sin embargo, debe haber una conversión válida entre los tipos de datos para que CAST funcione correctamente.
+    Ejemplo: SELECT title, CAST(length AS FLOAT) AS length_in_float FROM film;
+
+Función CONVERT:
+    La función CONVERT también se utiliza para cambiar el tipo de datos de una columna o expresión en una consulta. 
+    La principal diferencia entre CONVERT y CAST es que CONVERT proporciona más flexibilidad al permitirte especificar 
+    el formato de salida para ciertos tipos de datos, como fechas y horas.
+    Ejemplo: SELECT title, CONVERT(last_update, DATE) AS formatted_last_update FROM film;
+
+Diferencias:
+    Sintaxis: La sintaxis básica de CAST es CAST(expresión AS tipo_de_dato), mientras que la sintaxis de CONVERT es CONVERT(expresión, tipo_de_dato).
+    Flexibilidad: CONVERT proporciona más flexibilidad al permitirte especificar formatos de salida para tipos de datos como fechas y horas.
+*/
 
 
 
